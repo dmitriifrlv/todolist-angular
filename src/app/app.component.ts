@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TodoApp';
+  storedLists = [];
+
+  onListAdded(list) {
+    this.storedLists.push(list)
+    console.log(this.storedLists)
+  }
+  onTaskAdded(task){
+    console.log(task)
+    
+    this.storedLists[0].tasks.push(task)
+    // console.log(this.storedLists)
+  }
 }

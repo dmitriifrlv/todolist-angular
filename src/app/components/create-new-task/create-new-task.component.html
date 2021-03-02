@@ -1,0 +1,14 @@
+<div class="createListInput">
+  <mat-form-field appearance="fill">
+    <mat-label>Add new task</mat-label>
+    <input
+    type="text"
+    [(ngModel)] = "enteredTask"
+    matInput
+    >
+  </mat-form-field>
+  <button mat-raised-button 
+  color="primary"
+  (click)="onAddTask()"
+  >Add</button>
+</div>
