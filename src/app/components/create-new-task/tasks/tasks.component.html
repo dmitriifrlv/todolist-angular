@@ -1,0 +1,12 @@
+
+<p class="taskLine"
+[ngStyle]="{'text-decoration': (task.isCompleted==true) ? 'line-through' : 'none'}" 
+> 
+<span>
+  <button class="completedBtn" color="primary" mat-icon-button (click)="toggleCompleted(task.id)" ><mat-icon>done</mat-icon></button> 
+  <span class="taskName" [ngStyle]="{'opacity': (task.isCompleted==true) ? '.5' : '1'}" > {{task.description}}</span>
+</span>
+
+  <button class="deleteBtn" color="warn" mat-icon-button (click)="deleteATask(task.id)"><mat-icon>delete</mat-icon></button> 
+</p>
+<mat-divider></mat-divider>

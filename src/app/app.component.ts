@@ -1,21 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TodosService } from "../services/todos.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  storedLists = [];
+export class AppComponent implements OnInit{
 
-  onListAdded(list) {
-    this.storedLists.push(list)
-    console.log(this.storedLists)
-  }
-  onTaskAdded(task){
-    console.log(task)
-    
-    this.storedLists[0].tasks.push(task)
-    // console.log(this.storedLists)
-  }
+
+  constructor(private listsService:TodosService) { }
+
+  ngOnInit() {
+
+  } 
 }

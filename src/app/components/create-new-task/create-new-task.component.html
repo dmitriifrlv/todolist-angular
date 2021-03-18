@@ -1,5 +1,23 @@
+<app-search-bar
+(searchByLetters)="searchByLetters($event)"
+></app-search-bar>
+
+<app-check-box
+(uncompletedFilter)="uncompletedFilter()"
+(showAllTasks)="showAllTasks()"
+></app-check-box>
+
+<app-tasks 
+(taskToUpdate)="onUpdateATask($event)"
+(taskToDelete)="onDeleteATask($event)"
+*ngFor="let task of tasks" 
+[task]="task"
+></app-tasks>
+
 <div class="createListInput">
-  <mat-form-field appearance="fill">
+  <mat-form-field 
+  (ngSubmit)="onAddTask()"
+  appearance="fill">
     <mat-label>Add new task</mat-label>
     <input
     type="text"
@@ -12,3 +30,16 @@
   (click)="onAddTask()"
   >Add</button>
 </div>
+
+<!-- <form
+(ngSubmit)="onSubmit()"
+class="searchBar">
+  <mat-form-field appearance="fill"  >
+    <mat-label>Search</mat-label>
+    <input 
+    [(ngModel)] = "enteredLetters"
+    (ngModelChange)="searchListener($event)"
+    name="enteredLetters"
+    matInput>
+  </mat-form-field>
+</form> -->

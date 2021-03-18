@@ -1,16 +1,42 @@
-<div class="createListInput">
-  <mat-form-field appearance="fill">
-    <mat-label>Create a new list</mat-label>
-    <input 
-    matInput
-    type="text"
-    [(ngModel)] = "enteredTitle"
-    >
-  </mat-form-field>
-  <button 
-  mat-raised-button 
-  color="primary"
-  (click)="onAddList()"
-  >Create</button>
+<div class="appContainer">
+  <mat-card>
+    <div>
+      <app-lists-card-header></app-lists-card-header>
+    </div>
+
+    <mat-selection-list #shoes [multiple]="false">
+      <app-list 
+      *ngFor="let list of lists;index as i" 
+      (click)="onListClick(i)" 
+      [list]="list" 
+      [listId]="list.id"
+      [allTasks]="allTasks"
+      (listToDelete)="onDeleteAList($event)"
+      > </app-list>
+    </mat-selection-list>
+
+    <div class="createListInput">
+      <mat-form-field appearance="fill">
+        <mat-label>Create a new list</mat-label>
+        <input 
+        matInput
+        type="text"
+        [(ngModel)] = "enteredTitle"
+        >
+      </mat-form-field>
+      <button 
+      mat-raised-button 
+      color="primary"
+      (click)="onAddList()"
+      >Create</button>
+    </div>
+  </mat-card>
+  
+  
+  <mat-card *ngIf="selectedListNum>=0">
+    <app-task-list-header></app-task-list-header>
+    <app-create-new-task [tasks]="tasks" [selectedListNum]="selectedListNum" [lists]="lists"></app-create-new-task>
+  </mat-card>
+  
 </div>
 

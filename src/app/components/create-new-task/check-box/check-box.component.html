@@ -1,12 +1,13 @@
 <section class="checkBox">
-  <mat-radio-group aria-label="Select an option">
+  <mat-radio-group  value="all" aria-label="Select an option">
     <mat-radio-button 
+    (click)="showAll()"
     value="all"
     color="primary"
     >
     All
   </mat-radio-button>
-    <mat-radio-button value="Uncompleted" color="primary">
+    <mat-radio-button (click)="unCompleted()" value="Uncompleted" color="primary">
       Uncompleted
     </mat-radio-button>
   </mat-radio-group>

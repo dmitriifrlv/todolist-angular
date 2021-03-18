@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
+import { TodosService } from "../../../services/todos.service";
 
 @Component({
   selector: 'app-create-new-list',
@@ -7,36 +8,65 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./create-new-list.component.css']
 })
 export class CreateNewListComponent implements OnInit {
+  selectedListNum:number=-1;
   enteredTitle:string|number = '';
-  @Output() listCreated = new EventEmitter();
-  constructor() { }
+  lists:[]
+  tasks
+  list
+  allTasks
+  numberOfTasks:number;
+  numberOfCompletedTasks:number
+  @Output() tasksList = new EventEmitter();
 
-  ngOnInit(): void {
+  constructor(private listsService:TodosService) { }
+
+  ngOnInit() {
+    this.listsService.getLists().subscribe(lists => {
+      this.lists = lists
+    })
+    const myObserver = {
+      next: tasks=>this.allTasks=tasks,
+      error: err => console.error('Observer got an error: ' + err),
+      complete: () => console.log(this.allTasks),
+    };
+    this.listsService.getAllTasks().subscribe(myObserver)
+    console.log(this.lists, this.allTasks)
+  }
+
+  onListClick(listId){
+    this.selectedListNum = listId
+    const myObserver = {
+      next: (tasks)=>this.tasks=tasks,
+      error: err => console.error('Observer got an error: ' + err),
+      complete: () => console.log(this.tasks),
+    };
+    this.listsService.getTasks(listId).subscribe(myObserver)
   }
 
   onAddList(){
     const list = {
       title:this.enteredTitle,
-      listId:uuidv4(),
-      tasks: []
+      id:uuidv4(),
     }
-    this.listCreated.emit(list)
+    const myObserver = {
+      next: () => this.listsService.getLists().subscribe(lists=> {
+        this.lists=lists
+      }),
+      error: err => console.error('Observer got an error: ' + err),
+    };
+    this.listsService.addANewList(list).subscribe(myObserver)
+  }
+
+  onDeleteAList(id){
+    const myObserver = {
+      next: () => this.listsService.getLists().subscribe(lists=> {
+        this.lists=lists
+      }),
+      error: err => console.error('Observer got an error: ' + err),
+      complete:() => this.listsService.getLists().subscribe(lists=> {
+        this.lists=lists
+      }),
+    };
+    this.listsService.deleteAList(id).subscribe(myObserver)
   }
 }
-
-
-let z =[{
-  listId: 1,
-  title: "chores", 
-  tasks: [{
-      id: 1,
-      description: "cleaning",
-      isCompleted: false
-  },
-  {
-      id: 2,
-      description: "washing",
-      isCompleted: false
-  }
-  ]
-}]
