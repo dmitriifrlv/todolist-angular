@@ -2,17 +2,19 @@ form {
   display: flex;
   flex-direction: column;
 }
-.appContainer{
+
+.appContainer {
   display: flex;
 }
 
-mat-card{
+mat-card {
   min-height: 50vh;
+  max-height: 80vh;
   min-width: 25vw;
-  width:100%;
+  width: 100%;
   margin: 0 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: auto;
 }
-

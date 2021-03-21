@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import {FormsModule} from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { CreateNewListComponent } from './components/create-new-list/create-new-list.component';
 import { ListsCardHeaderComponent } from './components/create-new-list/lists-card-header/lists-card-header.component';
@@ -11,6 +12,8 @@ import { CreateNewTaskComponent } from './components/create-new-task/create-new-
 import { TasksComponent } from './components/create-new-task/tasks/tasks.component';
 import { SearchBarComponent } from './components/create-new-task/search-bar/search-bar.component';
 import { CheckBoxComponent } from './components/create-new-task/check-box/check-box.component'
+import { ListComponent } from './components/create-new-list/list/list.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule} from '@angular/material/form-field';
@@ -22,7 +25,7 @@ import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio'
 import { MatIconModule } from '@angular/material/icon';
-import { ListComponent } from './components/create-new-list/list/list.component';
+
 
 @NgModule({
   declarations: [

@@ -1,25 +1,25 @@
-.taskItem{
+.taskItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-button{
-  transform: scale(.8);
- }
-
-.completed {
-  text-decoration:  line-through;
-  opacity: .5;
+button {
+  transform: scale(0.8);
 }
 
-.deleteBtn:hover{
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.deleteBtn:hover {
   background-color: #f44336;
   color: white;
 }
 
-.completedBtn:hover{
+.completedBtn:hover {
   background-color: #3f51b5;
   color: white;
 }
@@ -27,9 +27,10 @@ button{
 .taskLine {
   margin: 0px 0px;
   display: flex;
-  justify-content: space-between;align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.taskName{
-  padding-left: .25rem;
+.taskName {
+  padding-left: 0.25rem;
 }

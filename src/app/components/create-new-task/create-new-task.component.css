@@ -1,9 +1,10 @@
-.inputContainer{
+.inputContainer {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-mat-form-field{
+
+mat-form-field {
   width: 100%;
 }
