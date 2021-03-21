@@ -1,24 +1,21 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { List } from '../../Models/List'
 
 @Component({
   selector: 'app-create-new-task',
   templateUrl: './create-new-task.component.html',
   styleUrls: ['./create-new-task.component.css']
 })
-export class CreateNewTaskComponent implements OnInit {
-  @Input()tasks
-  @Input() selectedListNum:number
-  @Input() lists
-  @Input() selectedList
+export class CreateNewTaskComponent {
+  @Input() tasks
+  @Input() selectedList:List
   @Output() taskCreated = new EventEmitter();
 
   requiredLetters:string=''
   showAll:Boolean = true
-  selectedListId
 
   taskTitleInput = new FormGroup({
     taskTitle: new FormControl('', [
@@ -28,18 +25,8 @@ export class CreateNewTaskComponent implements OnInit {
 
   constructor(private listsService:TodosService) { }
 
-  ngOnInit() {
-    // this.selectedListId=this.selectedList.id
-    // console.log(this.selectedList)
-    // this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>{
-    //   this.showAll===true 
-    //   ? this.tasks=tasks.filter(x=>x.description.includes(this.requiredLetters))
-    //   : this.tasks=tasks.filter(x=>x.isCompleted===false && x.description.includes(this.requiredLetters))
-    // })
-  }
-
   test(){
-    console.log(this.selectedList.id)
+    console.log()
     
   }
 
@@ -66,7 +53,7 @@ export class CreateNewTaskComponent implements OnInit {
     } 
   }
 
-  onDeleteATask(id){
+  onDeleteATask(id:string){
     const myObserver = {
       next: ()=>{
         const nestedObserver = {
@@ -121,7 +108,7 @@ export class CreateNewTaskComponent implements OnInit {
     this.listsService.getTasks(this.selectedList.id).subscribe(myObserver)
   }
 
-  searchByLetters(letters){
+  searchByLetters(letters:string){
     this.requiredLetters=letters
     const myObserver = {
       next: (tasks)=>{

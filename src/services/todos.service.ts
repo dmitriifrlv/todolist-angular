@@ -13,7 +13,6 @@ const httpOptions = {
 })
 export class TodosService {
   lists:[]
-  listsURL:string = 'https://tranquil-cove-22865.herokuapp.com/lists'  //old
   // URL = 'https://tranquil-cove-22865.herokuapp.com';  
   URL = 'http://localhost:3000';  
   constructor(private http:HttpClient) { }
@@ -28,7 +27,7 @@ export class TodosService {
     return this.http.get<any>(url);
   }
 
-  getTasks(id): Observable<any> {
+  getTasks(id:string): Observable<any> {
     const url = `${this.URL}/tasks?listsId=${id}`
     return this.http.get<any>(url)
   }
@@ -41,22 +40,22 @@ export class TodosService {
     return this.http.post(url, task, httpOptions)
   }
 
-  deleteATask(id): Observable<any> {
+  deleteATask(id:string): Observable<any> {
     const url = `${this.URL}/tasks/${id}`
     return this.http.delete(url)
   }
 
-  deleteAList(id): Observable<any> {
+  deleteAList(id:string): Observable<any> {
     const url = `${this.URL}/lists/${id}`
     return this.http.delete(url)
   }
 
-  toggleCompleted(id, updated): Observable<any> {
+  toggleCompleted(id:string, updated): Observable<any> {
     const url = `${this.URL}/tasks/${id}`
     return this.http.put(url, updated, httpOptions)
   }
 
-  listUpdate(id, updated): Observable<any> {
+  listUpdate(id:string, updated): Observable<any> {
     const url = `${this.URL}/lists/${id}`
     return this.http.put(url, updated, httpOptions)
   }

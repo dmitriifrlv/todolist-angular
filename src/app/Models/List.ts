@@ -1,5 +1,5 @@
 export class List {
-  id: number;
+  id: string;
   numberOfAllTasks: number;
   numberOfCompletedTasks: number;
   title: string;

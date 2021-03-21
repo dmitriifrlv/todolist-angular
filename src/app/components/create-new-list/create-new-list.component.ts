@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {List} from "../../Models/List"
+import { List } from "../../Models/List"
 
 @Component({
   selector: 'app-create-new-list',
@@ -12,16 +12,15 @@ import {List} from "../../Models/List"
 export class CreateNewListComponent implements OnInit {
   
   selectedListNum:number=-1;
-  enteredTitle:string|number = '';
   lists:[]
-  tasks
+  tasks:[]
   selectedList:List
 
   @Output() tasksList = new EventEmitter();
 
   createANewListForm = new FormGroup({
     listTitle: new FormControl('', [
-      Validators.compose([Validators.minLength(1), Validators.required])
+    Validators.compose([Validators.minLength(1), Validators.required])
     ])
   }) 
 
@@ -33,13 +32,13 @@ export class CreateNewListComponent implements OnInit {
     })
   }
 
-  onListClick(listId){
+  onListClick(listId:number){
     this.selectedList=this.lists[listId]
     this.selectedListNum = listId
     const selectedListId = this.selectedList.id
     const myObserver = {
-      next: (tasks)=>this.tasks=tasks,
-      error: err => console.error('Observer got an error: ' + err)
+      next: (tasks:[])=>this.tasks=tasks,
+      error: (err:string) => console.error('Observer got an error: ' + err)
     };
     this.listsService.getTasks(selectedListId).subscribe(myObserver)
     
@@ -56,18 +55,18 @@ export class CreateNewListComponent implements OnInit {
       next: () => this.listsService.getLists().subscribe(lists=> {
         this.lists=lists
       }),
-      error: err => console.error('Observer got an error: ' + err),
+      error: (err:string) => console.error('Observer got an error: ' + err),
     };
     this.listsService.addANewList(list).subscribe(myObserver)
     this.createANewListForm.setValue({listTitle:''})
   }
 
-  onDeleteAList(id){
+  onDeleteAList(id:string){
     const myObserver = {
       next: () => this.listsService.getLists().subscribe(lists=> {
         this.lists=lists
       }),
-      error: err => console.error('Observer got an error: ' + err),
+      error: (err:string) => console.error('Observer got an error: ' + err),
       complete:() => this.listsService.getLists().subscribe(lists=> {
         this.lists=lists
       }),
