@@ -6,36 +6,45 @@
 
     <mat-selection-list #shoes [multiple]="false">
       <app-list 
-      *ngFor="let list of lists;index as i" 
-      (click)="onListClick(i)" 
-      [list]="list" 
-      [listId]="list.id"
-      [allTasks]="allTasks"
-      (listToDelete)="onDeleteAList($event)"
-      > </app-list>
+        *ngFor="let list of lists;index as i" 
+        (click)="onListClick(i)" 
+        [list]="list" 
+        [listId]="list.id"
+        (listToDelete)="onDeleteAList($event)"
+      > 
+      </app-list>
     </mat-selection-list>
 
     <div class="createListInput">
-      <mat-form-field appearance="fill">
-        <mat-label>Create a new list</mat-label>
-        <input 
-        matInput
-        type="text"
-        [(ngModel)] = "enteredTitle"
+      <form [formGroup]="createANewListForm" (ngSubmit)="onAddList()">
+        <mat-form-field appearance="fill">
+          <mat-label>Create a new list</mat-label>
+          <input 
+          matInput
+          type="text"
+          formControlName="listTitle"
+          >
+        </mat-form-field>
+        <mat-error class="error" *ngIf="!createANewListForm.valid && createANewListForm.touched">
+          <mat-icon>error</mat-icon> Please enter the list name
+         </mat-error>
+        <button
+          type="submit" 
+          mat-raised-button 
+          color="primary"
+          [disabled]="!createANewListForm.valid"
         >
-      </mat-form-field>
-      <button 
-      mat-raised-button 
-      color="primary"
-      (click)="onAddList()"
-      >Create</button>
-    </div>
+        Create
+        </button>
+      </form>
+      </div>      
   </mat-card>
-  
   
   <mat-card *ngIf="selectedListNum>=0">
     <app-task-list-header></app-task-list-header>
-    <app-create-new-task [tasks]="tasks" [selectedListNum]="selectedListNum" [lists]="lists"></app-create-new-task>
+    <app-create-new-task
+    [selectedList] = "selectedList"
+    [tasks]="tasks" [selectedListNum]="selectedListNum" [lists]="lists"></app-create-new-task>
   </mat-card>
   
 </div>

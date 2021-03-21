@@ -1,6 +1,6 @@
 <div class="list">
-  <mat-list-option (click)="onClick()"  >
-    {{list.title}} (/)
+  <mat-list-option>
+    {{list.title}} ({{list.numberOfCompletedTasks}}/{{list.numberOfAllTasks}}) 
   </mat-list-option>
   <button color="warn" mat-icon-button (click)="onDeleteAList(list.id)"><mat-icon>delete</mat-icon></button>
 </div>

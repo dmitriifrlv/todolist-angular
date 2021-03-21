@@ -13,39 +13,52 @@ const httpOptions = {
 })
 export class TodosService {
   lists:[]
-  listsURL:string = 'https://tranquil-cove-22865.herokuapp.com/lists'
- 
+  listsURL:string = 'https://tranquil-cove-22865.herokuapp.com/lists'  //old
+  // URL = 'https://tranquil-cove-22865.herokuapp.com';  
+  URL = 'http://localhost:3000';  
   constructor(private http:HttpClient) { }
 
   addANewList(list): Observable<any> {
-    return this.http.post(this.listsURL, list, httpOptions)
+    const url = `${this.URL}/lists`
+    return this.http.post(url, list, httpOptions)
   }
 
   getLists(): Observable<any> {
-    return this.http.get<any>(this.listsURL);
+    const url = `${this.URL}/lists`
+    return this.http.get<any>(url);
   }
 
   getTasks(id): Observable<any> {
-    return this.http.get<any>(`https://tranquil-cove-22865.herokuapp.com/tasks?listsId=${id}`)
+    const url = `${this.URL}/tasks?listsId=${id}`
+    return this.http.get<any>(url)
   }
   getAllTasks(): Observable<any> {
-    return this.http.get<any>(`https://tranquil-cove-22865.herokuapp.com/tasks`)
+    const url = `${this.URL}/tasks`
+    return this.http.get<any>(url)
   }
   addANewTask(task): Observable<any> {
-    const url='https://tranquil-cove-22865.herokuapp.com/tasks'
+    const url = `${this.URL}/tasks`
     return this.http.post(url, task, httpOptions)
   }
 
   deleteATask(id): Observable<any> {
-    const url=`https://tranquil-cove-22865.herokuapp.com/tasks/${id}`
+    const url = `${this.URL}/tasks/${id}`
     return this.http.delete(url)
   }
+
   deleteAList(id): Observable<any> {
-    const url=`https://tranquil-cove-22865.herokuapp.com/lists/${id}`
+    const url = `${this.URL}/lists/${id}`
     return this.http.delete(url)
   }
+
   toggleCompleted(id, updated): Observable<any> {
-    const url=`https://tranquil-cove-22865.herokuapp.com/tasks/${id}`
+    const url = `${this.URL}/tasks/${id}`
     return this.http.put(url, updated, httpOptions)
   }
+
+  listUpdate(id, updated): Observable<any> {
+    const url = `${this.URL}/lists/${id}`
+    return this.http.put(url, updated, httpOptions)
+  }
+
 }

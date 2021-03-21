@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms'
 import {FormsModule} from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,7 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio'
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { ListComponent } from './components/create-new-list/list/list.component';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ListComponent } from './components/create-new-list/list/list.component'
     ListComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,

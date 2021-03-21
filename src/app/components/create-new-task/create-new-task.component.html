@@ -15,31 +15,18 @@
 ></app-tasks>
 
 <div class="createListInput">
-  <mat-form-field 
-  (ngSubmit)="onAddTask()"
-  appearance="fill">
-    <mat-label>Add new task</mat-label>
-    <input
-    type="text"
-    [(ngModel)] = "enteredTask"
-    matInput
-    >
-  </mat-form-field>
-  <button mat-raised-button 
-  color="primary"
-  (click)="onAddTask()"
-  >Add</button>
+  <form [formGroup]="taskTitleInput"  (ngSubmit)="onAddTask()">
+    <mat-form-field appearance="fill">
+      <mat-label>Add new task</mat-label>
+      <input
+      type="text"  
+      formControlName="taskTitle"
+      matInput
+      >
+    </mat-form-field>
+    <mat-error class="passMatch" *ngIf="!taskTitleInput.valid && taskTitleInput.touched">
+     <mat-icon >error</mat-icon> Please enter the task name
+    </mat-error>
+  </form>
 </div>
-
-<!-- <form
-(ngSubmit)="onSubmit()"
-class="searchBar">
-  <mat-form-field appearance="fill"  >
-    <mat-label>Search</mat-label>
-    <input 
-    [(ngModel)] = "enteredLetters"
-    (ngModelChange)="searchListener($event)"
-    name="enteredLetters"
-    matInput>
-  </mat-form-field>
-</form> -->
+<button (click)="test()" >test</button>

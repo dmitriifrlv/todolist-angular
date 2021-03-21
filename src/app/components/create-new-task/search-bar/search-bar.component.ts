@@ -12,9 +12,7 @@ export class SearchBarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSubmit(){
-    
-  }
+
   searchListener(e){
     this.enteredLetters=e
     this.searchByLetters.emit(this.enteredLetters)
