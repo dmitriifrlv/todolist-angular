@@ -1,3 +1,5 @@
+<div class="tasksContainer">
+  <app-task-list-header></app-task-list-header>
 <app-search-bar
 (searchByLetters)="searchByLetters($event)"
 ></app-search-bar>
@@ -13,10 +15,12 @@
 *ngFor="let task of tasks" 
 [task]="task"
 ></app-tasks>
+</div>
 
-<div class="createListInput">
+
+<div class="inputContainer">
   <form [formGroup]="taskTitleInput"  (ngSubmit)="onAddTask()">
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>Add new task</mat-label>
       <input
       type="text"  

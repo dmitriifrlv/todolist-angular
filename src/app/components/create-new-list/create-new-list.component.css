@@ -5,7 +5,14 @@ form {
 .appContainer{
   display: flex;
 }
+
 mat-card{
-  margin: 0rem 1rem;
+  min-height: 50vh;
+  min-width: 25vw;
+  width:100%;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 

@@ -11,7 +11,7 @@ import { Task } from '../../Models/Task'
   styleUrls: ['./create-new-task.component.css']
 })
 export class CreateNewTaskComponent {
-  @Input() tasks;
+  @Input() tasks:Task[];
   @Input() selectedList:List;
   @Output() taskCreated = new EventEmitter();
   requiredLetters:string='';
@@ -25,25 +25,25 @@ export class CreateNewTaskComponent {
 
   constructor(private listsService:TodosService) { }
 
-  taskFilter = (tasks)=>{
+  taskFilter = (tasks:Task[])=>{
     this.showAll===true 
     ? this.tasks=tasks.filter((task:Task)=>task.description.includes(this.requiredLetters))
     : this.tasks=tasks.filter((task:Task)=>task.isCompleted===false && task.description.includes(this.requiredLetters))
   };
   completedTasksNumber = () =>this.tasks.filter((task:Task)=>task.isCompleted===true).length;
   getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.tasks = tasks.filter((task:Task)=>task.description.includes(this.requiredLetters)))
+  //Observer for "update a task" and "delete a task" features
   myObserver = {
     next: ()=>{
       const nestedObserver = {
-        next:(tasks)=>{this.tasks=tasks},
+        next:(tasks:Task[])=>{this.tasks=tasks},
         complete: ()=>{
           this.selectedList.numberOfCompletedTasks=this.completedTasksNumber()
           this.selectedList.numberOfAllTasks=this.tasks.length
           this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe(()=>this.taskFilter(this.tasks))
         }
       }
-      this.listsService.getTasks(this.selectedList.id).subscribe(nestedObserver)},
-    complete: ()=>{this.tasks=this.taskFilter(this.tasks)}
+      this.listsService.getTasks(this.selectedList.id).subscribe(nestedObserver)}
   };
 
   //features:

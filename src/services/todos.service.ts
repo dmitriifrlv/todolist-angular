@@ -22,14 +22,14 @@ export class TodosService {
     return this.http.post<List>(url, list, httpOptions)
   }
 
-  getLists(): Observable<[]> {
+  getLists(): Observable<List[]> {
     const url = `${this.URL}/lists`
-    return this.http.get<[]>(url);
+    return this.http.get<List[]>(url);
   }
 
-  getTasks(id:string): Observable<any> {
+  getTasks(id:string): Observable<Task[]> {
     const url = `${this.URL}/tasks?listsId=${id}`
-    return this.http.get(url)
+    return this.http.get<Task[]>(url)
   }
 
   addANewTask(task:Task): Observable<Task> {
