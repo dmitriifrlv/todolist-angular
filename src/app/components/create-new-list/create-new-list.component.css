@@ -11,10 +11,30 @@ mat-card {
   min-height: 50vh;
   max-height: 80vh;
   min-width: 25vw;
-  width: 100%;
   margin: 0 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: auto;
 }
+
+@media (max-width: 768px) { 
+  mat-card {
+    min-height: 70vh;
+    max-height: 80vh;
+    min-width: 35vw;
+  }
+ }
+
+ @media (max-width: 428px) { 
+  .appContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  mat-card {
+    min-height: 5vh;
+    max-height: 44vh;
+    width: 80vw;
+    margin:.25rem 0rem;
+  }
+ }

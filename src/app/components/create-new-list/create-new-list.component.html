@@ -1,7 +1,7 @@
 <div class="appContainer">
   <mat-card class="appCard">
     <div>
-      <app-lists-card-header></app-lists-card-header>
+      <mat-toolbar color="primary">To Do Lists</mat-toolbar>
       <mat-selection-list #shoes [multiple]="false">
         <app-list 
           *ngFor="let list of lists;index as i" 

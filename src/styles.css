@@ -15,13 +15,11 @@ body {
 
 mat-error {
 margin-bottom: .5rem;
-/* border: 1px solid red; */
 display: flex;
 align-items: center;
 }
 
 
 mat-error mat-icon {
-  /* border: 1px solid red; */
   transform: scale(.7);
   }

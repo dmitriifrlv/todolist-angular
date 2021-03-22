@@ -14,7 +14,8 @@ const httpOptions = {
 })
 export class TodosService {
   lists:[]
-  URL = 'http://localhost:3000';  
+  URL="https://tranquil-cove-22865.herokuapp.com"
+  // URL = 'http://localhost:3000';  
   constructor(private http:HttpClient) { }
 
   addANewList(list:List): Observable<List> {

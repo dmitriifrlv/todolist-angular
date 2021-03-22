@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CreateNewListComponent } from './components/create-new-list/create-new-list.component';
-import { ListsCardHeaderComponent } from './components/create-new-list/lists-card-header/lists-card-header.component';
-import { TaskListHeaderComponent } from './components/create-new-task/task-list-header/task-list-header.component';
 import { CreateNewTaskComponent } from './components/create-new-task/create-new-task.component';
 import { TasksComponent } from './components/create-new-task/tasks/tasks.component';
 import { SearchBarComponent } from './components/create-new-task/search-bar/search-bar.component';
@@ -31,8 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     AppComponent,
     CreateNewListComponent,
-    ListsCardHeaderComponent,
-    TaskListHeaderComponent,
     CreateNewTaskComponent,
     TasksComponent,
     SearchBarComponent,
