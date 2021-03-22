@@ -23,7 +23,7 @@ import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio'
 import { MatIconModule } from '@angular/material/icon';
-
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from "ngx-ui-loader";
 
 @NgModule({
   declarations: [
@@ -36,6 +36,9 @@ import { MatIconModule } from '@angular/material/icon';
     ListComponent
   ],
   imports: [
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule,
+
     ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
