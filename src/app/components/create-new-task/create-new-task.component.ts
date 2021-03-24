@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -13,9 +13,8 @@ import { Task } from '../../Models/Task'
 export class CreateNewTaskComponent {
   @Input() tasks:Task[];
   @Input() selectedList:List;
-  @Output() taskCreated = new EventEmitter();
-  requiredLetters:string='';
-  showAll:Boolean = true;
+  requiredLetters='';
+  showAll = true;
 
   taskTitleInput = new FormGroup({
     taskTitle: new FormControl('', [

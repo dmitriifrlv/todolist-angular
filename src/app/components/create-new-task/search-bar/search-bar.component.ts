@@ -10,7 +10,7 @@ export class SearchBarComponent  {
   @Output() searchByLetters = new EventEmitter();
   constructor() { }
 
-  searchListener(e){
+  searchListener(e:string | number){
     this.enteredLetters=e
     this.searchByLetters.emit(this.enteredLetters)
   }
