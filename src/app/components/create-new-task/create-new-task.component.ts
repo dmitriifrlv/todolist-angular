@@ -25,19 +25,13 @@ export class CreateNewTaskComponent {
 
   constructor(private listsService:TodosService) { }
 
-
-
   taskFilter = (tasks:Task[], filterFunction)=>{
     this.tasks = tasks.filter(task => this.showAll 
       ? filterFunction(task)
       : !task.isCompleted && filterFunction(task))
   };
 
-  // taskFilter = (tasks:Task[])=>{
-  //   this.showAll===true 
-  //   ? this.tasks=tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))
-  //   : this.tasks=tasks.filter((task:Task)=>task.isCompleted===false && task.description.toLowerCase().includes(this.requiredLetters))
-  // };
+
 
   completedTasksNumber = () =>this.tasks.filter((task:Task)=>task.isCompleted===true).length;
   getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.taskFilter(tasks, (task:Task)=>task.description.toLowerCase().includes(this.requiredLetters)))

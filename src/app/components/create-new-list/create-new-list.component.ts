@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,8 +10,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './create-new-list.component.html',
   styleUrls: ['./create-new-list.component.css']
 })
-export class CreateNewListComponent implements OnInit {
-  addANewList: Subscription
+export class CreateNewListComponent implements OnInit, OnDestroy {
+  subscription: Subscription
+  deleteAList:Subscription
+  listClicked:Subscription
+  addedANewList:Subscription
+
   selectedListNum=-1;
   lists:List[];
   tasks:Task[];
@@ -26,11 +30,19 @@ export class CreateNewListComponent implements OnInit {
   constructor(private listsService:TodosService) { }
 
   ngOnInit() {
-    this.listsService.getLists().subscribe(lists => {
+    this.subscription = this.listsService.getLists().subscribe(lists => {
       this.lists = lists
     })
+    console.log(this.subscription.closed)
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe()
+    this.deleteAList.unsubscribe()
+    this.listClicked.unsubscribe()
+    this.addedANewList.unsubscribe()
+  }
+  
   onListSelected(num:number){
     this.selectedListNum = num
   }
@@ -38,9 +50,8 @@ export class CreateNewListComponent implements OnInit {
   onListClick(listId:number){
     this.selectedList=this.lists[listId]
     const selectedListId = this.selectedList.id
-    const subscription = this.listsService.getTasks(selectedListId).subscribe((tasks:[])=>{
+    this.listClicked=this.listsService.getTasks(selectedListId).subscribe((tasks:[])=>{
       this.tasks=tasks
-      subscription.unsubscribe()
     })
   }
 
@@ -54,10 +65,10 @@ export class CreateNewListComponent implements OnInit {
     const myObserver = {
       next:() => this.listsService.getLists().subscribe(lists=> {
         this.lists=lists
-      }),
-      complete: ()=>subscription.unsubscribe()
+      })
     }
-    const subscription = this.listsService.addANewList(list).subscribe(myObserver)
+    this.addedANewList = this.listsService.addANewList(list).subscribe(myObserver)
+    console.log(this.addedANewList)
     this.createANewListForm.setValue({listTitle:''})
     this.createANewListForm.reset(this.createANewListForm.value)
   }
@@ -70,6 +81,6 @@ export class CreateNewListComponent implements OnInit {
         this.lists=lists
       }),
     };
-    this.listsService.deleteAList(id).subscribe(myObserver)
+    this.deleteAList = this.listsService.deleteAList(id).subscribe(myObserver)
   }
 }
