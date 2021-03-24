@@ -25,13 +25,23 @@ export class CreateNewTaskComponent {
 
   constructor(private listsService:TodosService) { }
 
-  taskFilter = (tasks:Task[])=>{
-    this.showAll===true 
-    ? this.tasks=tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))
-    : this.tasks=tasks.filter((task:Task)=>task.isCompleted===false && task.description.toLowerCase().includes(this.requiredLetters))
+
+
+  taskFilter = (tasks:Task[], filterFunction)=>{
+    this.tasks = tasks.filter(task => this.showAll 
+      ? filterFunction(task)
+      : !task.isCompleted && filterFunction(task))
   };
+
+  // taskFilter = (tasks:Task[])=>{
+  //   this.showAll===true 
+  //   ? this.tasks=tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))
+  //   : this.tasks=tasks.filter((task:Task)=>task.isCompleted===false && task.description.toLowerCase().includes(this.requiredLetters))
+  // };
+
   completedTasksNumber = () =>this.tasks.filter((task:Task)=>task.isCompleted===true).length;
-  getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.tasks = tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters)))
+  getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.taskFilter(tasks, (task:Task)=>task.description.toLowerCase().includes(this.requiredLetters)))
+  
   //Observer for "update a task" and "delete a task" features
   private myObserver: Observer<any> = {
     next: ()=>{
@@ -40,7 +50,7 @@ export class CreateNewTaskComponent {
         complete: ()=>{
           this.selectedList.numberOfCompletedTasks=this.completedTasksNumber()
           this.selectedList.numberOfAllTasks=this.tasks.length
-          this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe(()=>this.taskFilter(this.tasks))
+          this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe(()=>this.taskFilter(this.tasks, (task:Task)=>task.description.toLowerCase().includes(this.requiredLetters)))
         }
       }
       this.listsService.getTasks(this.selectedList.id).subscribe(nestedObserver)},
@@ -57,7 +67,7 @@ export class CreateNewTaskComponent {
         isCompleted: false,
         listsId:this.selectedList.id
       }
-      this.listsService.addANewTask(task).subscribe(()=>this.listsService.getTasks(this.selectedList.id).subscribe((task)=>this.taskFilter(task)))
+      this.listsService.addANewTask(task).subscribe(()=>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.taskFilter(tasks, (task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))))
       this.selectedList.numberOfAllTasks+=1
       this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe()
       this.taskTitleInput.setValue({taskTitle:''})
