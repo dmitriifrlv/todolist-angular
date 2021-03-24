@@ -4,13 +4,14 @@ import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { List } from "../../Models/List"
 import { Task } from '../../Models/Task'
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-create-new-list',
   templateUrl: './create-new-list.component.html',
   styleUrls: ['./create-new-list.component.css']
 })
 export class CreateNewListComponent implements OnInit {
-  
+  addANewList: Subscription
   selectedListNum=-1;
   lists:List[];
   tasks:Task[];
@@ -37,7 +38,10 @@ export class CreateNewListComponent implements OnInit {
   onListClick(listId:number){
     this.selectedList=this.lists[listId]
     const selectedListId = this.selectedList.id
-    this.listsService.getTasks(selectedListId).subscribe((tasks:[])=>this.tasks=tasks)
+    const subscription = this.listsService.getTasks(selectedListId).subscribe((tasks:[])=>{
+      this.tasks=tasks
+      subscription.unsubscribe()
+    })
   }
 
   onAddList(){
@@ -47,9 +51,13 @@ export class CreateNewListComponent implements OnInit {
       numberOfAllTasks: 0,
       numberOfCompletedTasks: 0
     }
-    this.listsService.addANewList(list).subscribe(() => this.listsService.getLists().subscribe(lists=> {
-      this.lists=lists
-    }))
+    const myObserver = {
+      next:() => this.listsService.getLists().subscribe(lists=> {
+        this.lists=lists
+      }),
+      complete: ()=>subscription.unsubscribe()
+    }
+    const subscription = this.listsService.addANewList(list).subscribe(myObserver)
     this.createANewListForm.setValue({listTitle:''})
     this.createANewListForm.reset(this.createANewListForm.value)
   }

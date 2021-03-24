@@ -4,6 +4,7 @@ import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { List } from '../../Models/List'
 import { Task } from '../../Models/Task'
+import { Observer } from 'rxjs';
 
 @Component({
   selector: 'app-create-new-task',
@@ -13,7 +14,7 @@ import { Task } from '../../Models/Task'
 export class CreateNewTaskComponent {
   @Input() tasks:Task[];
   @Input() selectedList:List;
-  requiredLetters='';
+  requiredLetters:string='';
   showAll = true;
 
   taskTitleInput = new FormGroup({
@@ -32,7 +33,7 @@ export class CreateNewTaskComponent {
   completedTasksNumber = () =>this.tasks.filter((task:Task)=>task.isCompleted===true).length;
   getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.tasks = tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters)))
   //Observer for "update a task" and "delete a task" features
-  myObserver = {
+  private myObserver: Observer<any> = {
     next: ()=>{
       const nestedObserver = {
         next:(tasks:Task[])=>{this.tasks=tasks},
@@ -42,7 +43,9 @@ export class CreateNewTaskComponent {
           this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe(()=>this.taskFilter(this.tasks))
         }
       }
-      this.listsService.getTasks(this.selectedList.id).subscribe(nestedObserver)}
+      this.listsService.getTasks(this.selectedList.id).subscribe(nestedObserver)},
+      error: (err:string)=>console.log(err),
+      complete: ()=>{}
   };
 
   //features:
