@@ -27,11 +27,11 @@ export class CreateNewTaskComponent {
 
   taskFilter = (tasks:Task[])=>{
     this.showAll===true 
-    ? this.tasks=tasks.filter((task:Task)=>task.description.includes(this.requiredLetters))
-    : this.tasks=tasks.filter((task:Task)=>task.isCompleted===false && task.description.includes(this.requiredLetters))
+    ? this.tasks=tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))
+    : this.tasks=tasks.filter((task:Task)=>task.isCompleted===false && task.description.toLowerCase().includes(this.requiredLetters))
   };
   completedTasksNumber = () =>this.tasks.filter((task:Task)=>task.isCompleted===true).length;
-  getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.tasks = tasks.filter((task:Task)=>task.description.includes(this.requiredLetters)))
+  getTasks = () =>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.tasks = tasks.filter((task:Task)=>task.description.toLowerCase().includes(this.requiredLetters)))
   //Observer for "update a task" and "delete a task" features
   myObserver = {
     next: ()=>{
@@ -73,7 +73,7 @@ export class CreateNewTaskComponent {
 
   uncompletedFilter(){
     this.showAll=false
-    this.tasks=this.tasks.filter((task:Task)=>task.isCompleted===false && task.description.includes(this.requiredLetters)) 
+    this.tasks=this.tasks.filter((task:Task)=>task.isCompleted===false && task.description.toLowerCase().includes(this.requiredLetters)) 
   }
 
   showAllTasks(){
@@ -82,7 +82,7 @@ export class CreateNewTaskComponent {
   }
   
   searchByLetters(letters:string){
-    this.requiredLetters=letters
+    this.requiredLetters=letters.toLowerCase()
     this.getTasks()
   }
 }

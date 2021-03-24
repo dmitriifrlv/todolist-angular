@@ -38,7 +38,8 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from "ngx-ui-loader";
   imports: [
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule.forRoot({
-      showForeground:true
+      showForeground:true,
+      minTime:50
     }),
 
     ReactiveFormsModule,
