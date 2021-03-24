@@ -18,15 +18,15 @@ mat-card {
   overflow-y: auto;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
   mat-card {
     min-height: 70vh;
     max-height: 80vh;
     min-width: 35vw;
   }
- }
+}
 
- @media (max-width: 428px) { 
+@media (max-width: 428px) {
   .appContainer {
     display: flex;
     flex-direction: column;
@@ -35,6 +35,7 @@ mat-card {
     min-height: 5vh;
     max-height: 44vh;
     width: 80vw;
-    margin:.25rem 0rem;
+    margin: 0.25rem 0rem;
   }
- }
+}
+

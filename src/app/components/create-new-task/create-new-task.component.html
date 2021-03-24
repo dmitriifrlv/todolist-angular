@@ -1,35 +1,18 @@
 <div class="tasksContainer">
   <mat-toolbar color="primary">Task List</mat-toolbar>
-<app-search-bar
-(searchByLetters)="searchByLetters($event)"
-></app-search-bar>
-
-<app-check-box
-(uncompletedFilter)="uncompletedFilter()"
-(showAllTasks)="showAllTasks()"
-></app-check-box>
-
-<app-tasks 
-(taskToUpdate)="onUpdateATask($event)"
-(taskToDelete)="onDeleteATask($event)"
-*ngFor="let task of tasks" 
-[task]="task"
-></app-tasks>
+  <app-search-bar (searchByLetters)="searchByLetters($event)"></app-search-bar>
+  <app-check-box (uncompletedFilter)="uncompletedFilter()" (showAllTasks)="showAllTasks()"></app-check-box>
+  <app-tasks (taskToUpdate)="onUpdateATask($event)" (taskToDelete)="onDeleteATask($event)" *ngFor="let task of tasks" [task]="task"></app-tasks>
 </div>
 
-
 <div class="inputContainer">
-  <form [formGroup]="taskTitleInput"  (ngSubmit)="onAddTask()">
+  <form [formGroup]="taskTitleInput" (ngSubmit)="onAddTask()">
     <mat-form-field>
       <mat-label>Add new task</mat-label>
-      <input
-      type="text"  
-      formControlName="taskTitle"
-      matInput
-      >
+      <input type="text" formControlName="taskTitle" matInput>
     </mat-form-field>
     <mat-error class="passMatch" *ngIf="!taskTitleInput.valid && taskTitleInput.touched">
-     <mat-icon >error</mat-icon> Please enter the task name
+      <mat-icon>error</mat-icon> Please enter the task name
     </mat-error>
   </form>
 </div>

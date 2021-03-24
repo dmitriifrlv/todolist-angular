@@ -1,25 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { 
+html,
+body {
   height: 100%;
   background-color: beige;
   display: flex;
   align-items: center;
   justify-content: center;
- }
-body {
-   margin: 0; 
-   font-family: Roboto, "Helvetica Neue", sans-serif; 
-  }
-
-
-mat-error {
-margin-bottom: .5rem;
-display: flex;
-align-items: center;
 }
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-error {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
 
 mat-error mat-icon {
-  transform: scale(.7);
-  }
+  transform: scale(0.7);
+}
+
