@@ -37,7 +37,9 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from "ngx-ui-loader";
   ],
   imports: [
     NgxUiLoaderModule,
-    NgxUiLoaderHttpModule,
+    NgxUiLoaderHttpModule.forRoot({
+      showForeground:true
+    }),
 
     ReactiveFormsModule,
     BrowserModule,
