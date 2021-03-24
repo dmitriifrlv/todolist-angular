@@ -1,17 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { TodosService } from "../../../services/todos.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { List } from '../../Models/List'
 import { Task } from '../../Models/Task'
-import { Observer } from 'rxjs';
+import { Observer, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-new-task',
   templateUrl: './create-new-task.component.html',
   styleUrls: ['./create-new-task.component.css']
 })
-export class CreateNewTaskComponent {
+export class CreateNewTaskComponent implements OnDestroy {
+  addedATask:Subscription;
+  updatedAList:Subscription;
+  deletingATask:Subscription;
+  updatingATask:Subscription;
+  showingAllTasks:Subscription;
+  searchingByLetters:Subscription;
+
   @Input() tasks:Task[];
   @Input() selectedList:List;
   requiredLetters:string='';
@@ -22,7 +29,14 @@ export class CreateNewTaskComponent {
       Validators.compose([Validators.minLength(1), Validators.required])
     ])
   });
-
+  ngOnDestroy(){
+    this.addedATask.unsubscribe();
+    this.updatedAList.unsubscribe();
+    this.deletingATask.unsubscribe();
+    this.updatingATask.unsubscribe();
+    this.showingAllTasks.unsubscribe();
+    this.searchingByLetters.unsubscribe();
+  }
   constructor(private listsService:TodosService) { }
 
   taskFilter = (tasks:Task[], filterFunction)=>{
@@ -61,20 +75,20 @@ export class CreateNewTaskComponent {
         isCompleted: false,
         listsId:this.selectedList.id
       }
-      this.listsService.addANewTask(task).subscribe(()=>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.taskFilter(tasks, (task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))))
+      this.addedATask = this.listsService.addANewTask(task).subscribe(()=>this.listsService.getTasks(this.selectedList.id).subscribe((tasks)=>this.taskFilter(tasks, (task:Task)=>task.description.toLowerCase().includes(this.requiredLetters))))
       this.selectedList.numberOfAllTasks+=1
-      this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe()
+      this.updatedAList=this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe()
       this.taskTitleInput.setValue({taskTitle:''})
       this.taskTitleInput.reset(this.taskTitleInput.value)
     } 
   }
   
   onDeleteATask(id:string){
-    this.listsService.deleteATask(id).subscribe(this.myObserver)
+    this.deletingATask=this.listsService.deleteATask(id).subscribe(this.myObserver)
   }
 
   onUpdateATask(updatedTask:Task) {
-    this.listsService.toggleCompleted(updatedTask.id,updatedTask).subscribe(this.myObserver)
+    this.updatingATask=this.listsService.toggleCompleted(updatedTask.id,updatedTask).subscribe(this.myObserver)
   }
 
   uncompletedFilter(){
@@ -84,11 +98,11 @@ export class CreateNewTaskComponent {
 
   showAllTasks(){
     this.showAll=true;
-    this.getTasks()
+    this.showingAllTasks=this.getTasks()
   }
   
   searchByLetters(letters:string){
     this.requiredLetters=letters.toLowerCase()
-    this.getTasks()
+    this.searchingByLetters = this.getTasks()
   }
 }

@@ -33,7 +33,6 @@ export class CreateNewListComponent implements OnInit, OnDestroy {
     this.subscription = this.listsService.getLists().subscribe(lists => {
       this.lists = lists
     })
-    console.log(this.subscription.closed)
   }
 
   ngOnDestroy(){
@@ -68,7 +67,6 @@ export class CreateNewListComponent implements OnInit, OnDestroy {
       })
     }
     this.addedANewList = this.listsService.addANewList(list).subscribe(myObserver)
-    console.log(this.addedANewList)
     this.createANewListForm.setValue({listTitle:''})
     this.createANewListForm.reset(this.createANewListForm.value)
   }
