@@ -50,7 +50,7 @@ export class CreateNewTaskComponent {
   onAddTask(){
     if (this.taskTitleInput.valid) {
       const task = {
-        description:this.taskTitleInput.value.taskTitle,
+        description:this.taskTitleInput.value.taskTitle.trim(),
         id: uuidv4(),
         isCompleted: false,
         listsId:this.selectedList.id

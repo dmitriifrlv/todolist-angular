@@ -41,7 +41,7 @@ export class CreateNewListComponent implements OnInit {
 
   onAddList(){
     const list = {
-      title:this.createANewListForm.value.listTitle,
+      title:this.createANewListForm.value.listTitle.trim(),
       id:uuidv4(),
       numberOfAllTasks: 0,
       numberOfCompletedTasks: 0
