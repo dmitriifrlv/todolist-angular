@@ -50,6 +50,7 @@ export class CreateNewListComponent implements OnInit {
       this.lists=lists
     }))
     this.createANewListForm.setValue({listTitle:''})
+    this.createANewListForm.reset(this.createANewListForm.value)
   }
 
   onDeleteAList(id:string){

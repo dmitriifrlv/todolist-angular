@@ -59,6 +59,7 @@ export class CreateNewTaskComponent {
       this.selectedList.numberOfAllTasks+=1
       this.listsService.listUpdate(this.selectedList.id,this.selectedList).subscribe()
       this.taskTitleInput.setValue({taskTitle:''})
+      this.taskTitleInput.reset(this.taskTitleInput.value)
     } 
   }
   
