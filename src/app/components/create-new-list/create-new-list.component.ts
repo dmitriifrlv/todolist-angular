@@ -32,9 +32,12 @@ export class CreateNewListComponent implements OnInit {
     })
   }
 
+  onListSelected(num:number){
+    this.selectedListNum = num
+  }
+  
   onListClick(listId:number){
     this.selectedList=this.lists[listId]
-    this.selectedListNum = listId
     const selectedListId = this.selectedList.id
     this.listsService.getTasks(selectedListId).subscribe((tasks:[])=>this.tasks=tasks)
   }
@@ -55,9 +58,7 @@ export class CreateNewListComponent implements OnInit {
 
   onDeleteAList(id:string){
     const myObserver = {
-      next: () => this.listsService.getLists().subscribe(lists=> {
-        this.lists=lists
-      }),
+      next: () => {this.selectedListNum=-1},
       error: (err:string) => console.error('Observer got an error: ' + err),
       complete:() => this.listsService.getLists().subscribe(lists=> {
         this.lists=lists

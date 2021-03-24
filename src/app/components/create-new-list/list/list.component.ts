@@ -9,10 +9,13 @@ export class ListComponent {
   @Input() list:List
   @Input() listId:string
   @Output() listToDelete = new EventEmitter();
-
+  @Output() listNum = new EventEmitter();
   constructor() { }
 
   onDeleteAList(id:string) {
     this.listToDelete.emit(id)
+  }
+  onListClick(){
+    this.listNum.emit(1)
   }
 }

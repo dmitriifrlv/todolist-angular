@@ -9,6 +9,7 @@
           [list]="list" 
           [listId]="list.id"
           (listToDelete)="onDeleteAList($event)"
+          (listNum)="onListSelected($event)"
         > 
         </app-list>
       </mat-selection-list>
